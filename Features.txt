@@ -1,0 +1,14 @@
+A website that has
+- Community News Channel 
+- Facilities - Doctors, Tutors, Shopping, Gym - their contacts, rating, work and experience with fee details
+- Complete Map of the society
+- Contacts of owners and everybody - if they like it
+- Contacts of president, secretary, vice of the society
+- Any flats available for rent and sale
+- QR codes for gatepass - for zomato, swiggy, workers(maids) or any online delivery and visitor in & out tracking
+- Maintenance fee, Event fee
+- Event shoot and events (In a calendar)
+- Wrong parking alert
+- Complaints
+
+Is that right??
