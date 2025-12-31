@@ -1,5 +1,6 @@
 CREATE DATABASE SOCIETY;
 USE SOCIETY;
+
 CREATE TABLE residents (
     name VARCHAR(100) NOT NULL,
     authorization ENUM('Home Owner', 'President', 'Vice') NOT NULL,
@@ -8,6 +9,7 @@ CREATE TABLE residents (
     flat_number VARCHAR(10) NOT NULL,
     PRIMARY KEY (block, flat_number)
 );
+-- SECURITY FEATURES : Resident Authority, Time-based access control, Audit logging, Zero-trust entry
 CREATE TABLE gatepasses (
     pass_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     block CHAR NOT NULL,
