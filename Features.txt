@@ -10,5 +10,4 @@ A website that has
 - Event shoot and events (In a calendar)
 - Wrong parking alert
 - Complaints
-
-Is that right??
+- Check water level in water tanks (Need sensors)
