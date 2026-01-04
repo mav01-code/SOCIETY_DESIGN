@@ -8,3 +8,4 @@ This project aims to act as a medium of safety for the residents living in gated
 - entry
 - gatepass
 - residents
+ - to store resident information and perform crud operations on it
