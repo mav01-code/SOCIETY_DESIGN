@@ -1,13 +1,28 @@
-def notify_resident(block, flat, visitor, visitor_type):
-    pass
+from sqlalchemy import Session
+from .models import EntryLog
 
-def request_entry(block, flat, visitor, visitor_type, mode):
-    pass
+def create_entry_request(db: Session, block, flat, visitor_name, visitor_type, pass_mode, status):
+    entry = EntryLog(
+        block=block,
+        flat_number=flat,
+        visitor_name=visitor_name,
+        visitor_type=visitor_type,
+        pass_mode=pass_mode,
+        status=status
+    )
+    db.add(entry)
+    db.commit()
+    db.refresh(entry)
+    return entry.log_id
 
+def get_entry(db: Session, log_id):
+    entry = db.query(EntryLog).filter(EntryLog.log_id == log_id).first()
+    return entry
 
-if __name == "__main__":
-    visitor = input("Enter the visitor name: ")
-    visitor_type = input("(ZOMATO/SWIGGY/MAID/DELIVERY/GUEST/MAINTENANCE)")
-    block = input("Enter block : ")
-    flat = int(input("Enter flat number: "))
-    mode = input("(QR/AUTO/INSTANT)")
+def update_entry(db: Session, log_id, new_status):
+    entry = db.query(EntryLog).filter(EntryLog.log_id == log_id).first()
+    if entry:
+        entry.status = new_status
+        db.commit()
+        db.refresh(entry)
+    return entry
