@@ -10,8 +10,8 @@ router = APIRouter()
 
 @router.post("/")
 # (db: Session, block, flat, visitor_name, visitor_type, pass_mode, status):
-def add_entry():
-    pass
+def add_entry(db: Session = Depends(get_db), block: str, flat: str, visitor_name: str, visitor_type: str, pass_mode: str, status: str):
+    return create_entry_request(block, flat, visitor_name, visitor_type, pass_mode, status)
 
 @router.get("/")
 def get_entry():

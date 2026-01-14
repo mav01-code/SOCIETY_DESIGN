@@ -8,12 +8,13 @@ from residents.service import (
     update_resident,
     delete_resident
 )
+from residents.schema import ResidentCreate, ResidentUpdate
 
 router = APIRouter()
 
 @router.post("/")
-def add_resident(name: str, flat: str, block: str, phone: str, db: Session = Depends(get_db)):
-    return create_resident(db, name, flat, block, phone)
+def add_resident(resident: ResidentCreate, db: Session = Depends(get_db)):
+    return create_resident(db, resident.name, resident.flat, resident.block, resident.phone)
 
 @router.get("/")
 def list_residents(db: Session = Depends(get_db)):
@@ -23,11 +24,9 @@ def list_residents(db: Session = Depends(get_db)):
 def get_resident(block: str, flat: str, db: Session = Depends(get_db)):
     return get_resident_by_flat(db, block, flat)
 
-
 @router.put("/{block}/{flat}")
-def update_res(block: str, flat: str, name: str, phone: str, db: Session = Depends(get_db)):
-    return update_resident(db, block, flat, name, phone)
-
+def update_res(block: str, flat: str, data: ResidentUpdate, db: Session = Depends(get_db)):
+    return update_resident(db, block, flat, data.name, data.phone)
 
 @router.delete("/{block}/{flat}")
 def delete_res(block: str, flat: str, db: Session = Depends(get_db)):
