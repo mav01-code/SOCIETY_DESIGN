@@ -8,3 +8,15 @@ from entry.service import (
 )
 router = APIRouter()
 
+@router.post("/")
+# (db: Session, block, flat, visitor_name, visitor_type, pass_mode, status):
+def add_entry():
+    pass
+
+@router.get("/")
+def get_entry():
+    pass
+
+@router.put("/{block}/{flat}")
+def update_entry():
+    pass

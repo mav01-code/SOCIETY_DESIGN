@@ -19,14 +19,16 @@ def add_resident(name: str, flat: str, block: str, phone: str, db: Session = Dep
 def list_residents(db: Session = Depends(get_db)):
     return get_all_residents(db)
 
-@router.get("/{flat}")
-def get_resident(flat: str, db: Session = Depends(get_db)):
-    return get_resident_by_flat(db, flat)
+@router.get("/{block}/{flat}")
+def get_resident(block: str, flat: str, db: Session = Depends(get_db)):
+    return get_resident_by_flat(db, block, flat)
 
-@router.put("/{flat}")
-def update_res(flat: str, name: str, phone: str, db: Session = Depends(get_db)):
-    return update_resident(db, flat, name, phone)
 
-@router.delete("/{flat}")
-def delete_res(flat: str, db: Session = Depends(get_db)):
-    return delete_resident(db, flat)
+@router.put("/{block}/{flat}")
+def update_res(block: str, flat: str, name: str, phone: str, db: Session = Depends(get_db)):
+    return update_resident(db, block, flat, name, phone)
+
+
+@router.delete("/{block}/{flat}")
+def delete_res(block: str, flat: str, db: Session = Depends(get_db)):
+    return delete_resident(db, block, flat)
