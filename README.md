@@ -2,7 +2,7 @@
 
 This project aims to act as a medium of safety for the residents living in gated communities. It's still in the design process. The final design will be released soon.
 
-### Modules
+### Packages
 - database
     - to connect database and backend usi+ng bean class (Base class in FastAPI)
 - entry
@@ -12,4 +12,8 @@ This project aims to act as a medium of safety for the residents living in gated
 - residents
     - to store resident information and perform crud operations on it
 
-Every module contains a file name API (Application Programming Interface) that exposes logic to communicate with other components
+Each package contains (except database)
+- init - package initialization
+- service - server logic
+- schema - defines structure for API requests and responses
+- routes - API endpoints (post, get, put, delete)
