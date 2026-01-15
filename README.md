@@ -1,6 +1,6 @@
 # SOCIETY DESIGN
 
-This project aims to act as a medium of safety for the residents living in gated communities. It's still in the design process. The final design will be released soon.
+This project aims to act as a medium of safety for the residents living in gated communities. Currently building the first version of the project.
 
 ### Packages
 - database
@@ -17,3 +17,31 @@ Each package contains (except database)
 - service - server logic
 - schema - defines structure for API requests and responses
 - routes - API endpoints (post, get, put, delete)
+
+### API Testing
+- resident
+    - post - tested and works
+    - get - tested and works
+    - put - tested and works
+    - delete - tested and works
+- entry
+    - post - tested and works
+    - get - tested and works
+    - put - tested and works
+    - delete - doesn't exist cause entry audit log cannot be deleted for confidentiality
+- gatepass - Haven't tested API endpoints for this package cause I need to generate qr and display it as an image on the presentation layer (will do it after building frontend layer)
+    - post
+    - get
+    - update
+    - delete - doesn't exist for the same reason as entry
+
+### Flow
+Database -> Service layer -> API layer -> Presentation layer
+
+### Completed layers
+1) Database layer - Schema design for residents, gatepass and entry_logs
+2) Backend layer (Server logic) - resident, gatepass and entry packages
+3) API layer (to expose server logic to frontend) - resident, gatepass and entry packages
+
+### Todo layers
+1) Presentation layer
