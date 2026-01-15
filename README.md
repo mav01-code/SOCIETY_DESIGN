@@ -32,7 +32,7 @@ Each package contains (except database):
 - gatepass - Haven't tested API endpoints for this package cause I need to generate qr and display it as an image on the presentation layer (will do it after building frontend layer)
     - post
     - get
-    - update
+    - put
     - delete - doesn't exist for the same reason as entry
 
 ### Flow
