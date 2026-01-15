@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from database.db import get_db
 from entry.service import (
@@ -6,17 +6,34 @@ from entry.service import (
     get_entry,
     update_entry
 )
+from entry.schema import EntryCreate, EntryUpdate
+
 router = APIRouter()
 
 @router.post("/")
-# (db: Session, block, flat, visitor_name, visitor_type, pass_mode, status):
-def add_entry(db: Session = Depends(get_db), block: str, flat: str, visitor_name: str, visitor_type: str, pass_mode: str, status: str):
-    return create_entry_request(block, flat, visitor_name, visitor_type, pass_mode, status)
+def add_entry(entry: EntryCreate, db: Session = Depends(get_db)):
+    return create_entry_request(
+        db,
+        entry.block,
+        entry.flat,
+        entry.visitor_name,
+        entry.visitor_type,
+        entry.pass_mode,
+        entry.status
+    )
 
-@router.get("/")
-def get_entry():
-    pass
+@router.get("/{block}/{flat}")
+def fetch_entry(block: str, flat: str, db: Session = Depends(get_db)):
+    return get_entry(db, block, flat)
 
 @router.put("/{block}/{flat}")
-def update_entry():
-    pass
+def modify_entry(block: str, flat: str, entry: EntryUpdate, db: Session = Depends(get_db)):
+    return update_entry(
+        db,
+        block,
+        flat,
+        entry.visitor_name,
+        entry.visitor_type,
+        entry.pass_mode,
+        entry.status
+    )

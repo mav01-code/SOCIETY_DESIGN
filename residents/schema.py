@@ -1,15 +1,12 @@
 from pydantic import BaseModel
 
-class EntryCreate(BaseModel):
+class ResidentCreate(BaseModel):
     block: str
     flat: str
-    visitor_name: str
-    visitor_type: str
-    pass_mode: str
-    status: str
+    name: str
+    phone: str
 
-class EntryUpdate(BaseModel):
-    visitor_name: str
-    visitor_type: str
-    pass_mode: str
-    status: str
+
+class ResidentUpdate(BaseModel):
+    name: str
+    phone: str
