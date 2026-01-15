@@ -1,12 +1,15 @@
 from pydantic import BaseModel
 
 class ResidentCreate(BaseModel):
-    block: str
-    flat: str
     name: str
-    phone: str
-
+    authorization: str
+    total_family_members: int
+    block: str
+    flat_number: str
 
 class ResidentUpdate(BaseModel):
     name: str
-    phone: str
+    authorization: str
+    total_family_members: int
+    block: str
+    flat_number: str

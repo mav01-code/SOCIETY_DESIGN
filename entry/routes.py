@@ -1,11 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from database.db import get_db
-from entry.service import (
-    create_entry_request,
-    get_entry,
-    update_entry
-)
+from entry.service import create_entry_request, get_entry, update_entry
 from entry.schema import EntryCreate, EntryUpdate
 
 router = APIRouter()
@@ -19,21 +15,14 @@ def add_entry(entry: EntryCreate, db: Session = Depends(get_db)):
         entry.visitor_name,
         entry.visitor_type,
         entry.pass_mode,
-        entry.status
+        entry.status,
+        entry.scanned_at
     )
 
-@router.get("/{block}/{flat}")
-def fetch_entry(block: str, flat: str, db: Session = Depends(get_db)):
-    return get_entry(db, block, flat)
+@router.get("/{log_id}")
+def fetch_entry(log_id: int, db: Session = Depends(get_db)):
+    return get_entry(db, log_id)
 
-@router.put("/{block}/{flat}")
-def modify_entry(block: str, flat: str, entry: EntryUpdate, db: Session = Depends(get_db)):
-    return update_entry(
-        db,
-        block,
-        flat,
-        entry.visitor_name,
-        entry.visitor_type,
-        entry.pass_mode,
-        entry.status
-    )
+@router.put("/{log_id}")
+def modify_entry(log_id: int, entry: EntryUpdate, db: Session = Depends(get_db)):
+    return update_entry(db, log_id, entry.status)

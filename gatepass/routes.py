@@ -1,41 +1,36 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from database.db import get_db
-from gatepass.service import (
-    create_gatepass,
-    get_gatepass,
-    update_gatepass
-)
+from gatepass.service import generate_qr, update_gatepass, get_gatepass_by_id, get_gatepasses_by_flat
 from gatepass.schema import GatePassCreate, GatePassUpdate
 
 router = APIRouter()
 
 @router.post("/")
 def add_gatepass(gatepass: GatePassCreate, db: Session = Depends(get_db)):
-    return create_gatepass(
+    return generate_qr(
         db,
         gatepass.block,
-        gatepass.flat,
-        gatepass.pass_type,
-        gatepass.issued_to,
+        gatepass.flat_number,
         gatepass.valid_from,
-        gatepass.valid_till,
-        gatepass.status
+        gatepass.valid_until
     )
 
-@router.get("/{block}/{flat}")
-def fetch_gatepass(block: str, flat: str, db: Session = Depends(get_db)):
-    return get_gatepass(db, block, flat)
-
-@router.put("/{block}/{flat}")
-def modify_gatepass(block: str, flat: str, gatepass: GatePassUpdate, db: Session = Depends(get_db)):
+@router.put("/")
+def modify_gatepass(gatepass: GatePassUpdate, db: Session = Depends(get_db)):
     return update_gatepass(
         db,
-        block,
-        flat,
-        gatepass.pass_type,
-        gatepass.issued_to,
+        gatepass.pass_id,
+        gatepass.block,
+        gatepass.flat_number,
         gatepass.valid_from,
-        gatepass.valid_till,
-        gatepass.status
+        gatepass.valid_until
     )
+
+@router.get("/{pass_id}")
+def fetch_gatepass(pass_id: int, db: Session = Depends(get_db)):
+    return get_gatepass_by_id(db, pass_id)
+
+@router.get("/flat/{block}/{flat_number}")
+def fetch_gatepasses_for_flat(block: str, flat_number: str, db: Session = Depends(get_db)):
+    return get_gatepasses_by_flat(db, block, flat_number)

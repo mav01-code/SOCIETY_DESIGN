@@ -3,8 +3,7 @@ from sqlalchemy.orm import Session
 from database.db import get_db
 from residents.service import (
     create_resident,
-    get_all_residents,
-    get_resident_by_flat,
+    get_resident,
     update_resident,
     delete_resident
 )
@@ -14,20 +13,16 @@ router = APIRouter()
 
 @router.post("/")
 def add_resident(resident: ResidentCreate, db: Session = Depends(get_db)):
-    return create_resident(db, resident.name, resident.flat, resident.block, resident.phone)
+    return create_resident(db, resident.name, resident.authorization, resident.total_family_members, resident.block, resident.flat_number)
 
-@router.get("/")
-def list_residents(db: Session = Depends(get_db)):
-    return get_all_residents(db)
+@router.get("/{block}/{flat_number}")
+def fetch_resident(block: str, flat_number: str, db: Session = Depends(get_db)):
+    return get_resident(db, block, flat_number)
 
-@router.get("/{block}/{flat}")
-def get_resident(block: str, flat: str, db: Session = Depends(get_db)):
-    return get_resident_by_flat(db, block, flat)
+@router.put("/{block}/{flat_number}")
+def update_res(block: str, flat_number: str, data: ResidentUpdate, db: Session = Depends(get_db)):
+    return update_resident(db, data.name, data.authorization, data.total_family_members, block, flat_number)
 
-@router.put("/{block}/{flat}")
-def update_res(block: str, flat: str, data: ResidentUpdate, db: Session = Depends(get_db)):
-    return update_resident(db, block, flat, data.name, data.phone)
-
-@router.delete("/{block}/{flat}")
-def delete_res(block: str, flat: str, db: Session = Depends(get_db)):
-    return delete_resident(db, block, flat)
+@router.delete("/{block}/{flat_number}")
+def delete_res(block: str, flat_number: str, db: Session = Depends(get_db)):
+    return delete_resident(db, block, flat_number)

@@ -36,3 +36,6 @@ SELECT * FROM ENTRY_LOGS;
 -- INSTANT - Unexpected guests or deliveries
 -- AUTO - Regular attendees (maid, milk, groceries, maintenanace staff)
 -- QR - Pre-approved guests
+SELECT * FROM RESIDENTS;
+
+INSERT INTO ENTRY_LOGS VALUES(0, 'A', '101', "Akshaya", "GUEST", "INSTANT", "ALLOWED", NOW());

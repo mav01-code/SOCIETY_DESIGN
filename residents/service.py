@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from .models import Resident
+from database.models import Resident
 
 # CRUD Operations for Resident
 def create_resident(db: Session, name, authorization, total_family_members, block, flat_number): # CREATE
