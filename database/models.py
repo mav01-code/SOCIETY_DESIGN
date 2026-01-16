@@ -34,3 +34,12 @@ class EntryLog(Base):
     pass_mode = Column(Enum('QR','AUTO','INSTANT'))
     status = Column(Enum('ALLOWED','DENIED'))
     scanned_at = Column(TIMESTAMP, default=datetime.utcnow)
+
+class Users(Base):
+    __tablename__ = "users"
+
+    user_id = Column(BigInteger, primary_key = True, autoincrement = True)
+    username = Column(String(100), unique=True, nullable=False)
+    password_hash = Column(String(100))
+    role = Column(Enum('resident', 'security', 'admin'))
+    created_at = Column(TIMESTAMP, default = datetime.utcnow)

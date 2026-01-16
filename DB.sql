@@ -47,3 +47,5 @@ CREATE TABLE users (
     role ENUM('resident', 'security', 'admin') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+SELECT * FROM USERS;
