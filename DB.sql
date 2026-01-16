@@ -39,3 +39,11 @@ SELECT * FROM ENTRY_LOGS;
 SELECT * FROM RESIDENTS;
 
 INSERT INTO ENTRY_LOGS VALUES(0, 'A', '101', "Akshaya", "GUEST", "INSTANT", "ALLOWED", NOW());
+
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role ENUM('resident', 'security', 'admin') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
