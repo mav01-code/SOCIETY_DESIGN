@@ -11,6 +11,8 @@ This project aims to act as a medium of safety for the residents living in gated
     - generates qr code for pre-approved guests and security can scan it immediately without any further delay
 - residents
     - to store resident information and perform crud operations on it
+- users
+    - to store user login credentials
 
 Each package contains (except database):
 - init - package initialization
@@ -34,6 +36,11 @@ Each package contains (except database):
     - get
     - put
     - delete - doesn't exist for the same reason as entry
+- users
+    - post - tested and works
+    - get - tested and works
+    - put - tested and works
+    - delete - tested and works
 
 ### Flow
 Database -> Service layer -> API layer -> Presentation layer
