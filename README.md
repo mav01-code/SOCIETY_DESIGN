@@ -45,3 +45,15 @@ Database -> Service layer -> API layer -> Presentation layer
 
 ### Todo layers
 1) Presentation layer
+
+### Frontend - flow plan
+
+1) For residents
+    1) Register -> (Flat & Block) and password(hashed)  
+    2) Resident Details Screen
+    3) Login with registered details
+    4) Option to generate gatepasses
+2) For security
+    1) Direct login - credentials provided by authority
+    2) Option to add and update entry logs to db 
+    3) Option to scan QR codes
