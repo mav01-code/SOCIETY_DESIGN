@@ -40,6 +40,6 @@ class Users(Base):
 
     user_id = Column(BigInteger, primary_key = True, autoincrement = True)
     username = Column(String(100), unique=True, nullable=False)
-    password_hash = Column(String(100))
+    password = Column(String(100))
     role = Column(Enum('resident', 'security', 'admin'))
     created_at = Column(TIMESTAMP, default = datetime.utcnow)

@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 from urllib.parse import quote_plus
 
 DB_USER = "root"
-DB_PASS = quote_plus("Varshini@102006")
+DB_PASS = quote_plus("pass")
 DB_HOST = "localhost"
 DB_NAME = "SOCIETY"
 
