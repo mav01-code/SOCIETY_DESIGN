@@ -43,14 +43,16 @@ Each package contains (except database):
     - delete - tested and works
 
 ### Flow
-Database -> Service layer -> API layer -> Presentation layer
+Input: Presentation layer -> API layer -> Service layer -> Database
+Output: Database -> Service layer -> API layer -> Presentation layer
+
 
 ### Completed layers
 1) Database layer - Schema design for residents, gatepass and entry_logs
 2) Backend layer (Server logic) - resident, gatepass and entry packages
 3) API layer (to expose server logic to frontend) - resident, gatepass and entry packages
 
-### Todo layers
+### In-progress layers
 1) Presentation layer
 
 ### Frontend - flow plan
