@@ -11,15 +11,31 @@ from residents.schema import ResidentCreate, ResidentUpdate
 
 router = APIRouter()
 
+from fastapi import Query
+
 @router.post("/")
-def add_resident(resident: ResidentCreate, db: Session = Depends(get_db)):
-    return create_resident(db, resident.name, resident.authorization, resident.total_family_members, resident.block, resident.flat_number)
+def add_resident(
+    resident: ResidentCreate,
+    username: str = Query(...),
+    db: Session = Depends(get_db)
+):
+    block, flat_number = username.strip().split("-")
+
+    return create_resident(
+        db,
+        resident.name,
+        resident.authorization,
+        resident.total_family_members,
+        block,
+        flat_number
+    )
+
 
 @router.get("/{block}/{flat_number}")
 def fetch_resident(block: str, flat_number: str, db: Session = Depends(get_db)):
     return get_resident(db, block, flat_number)
 
-@router.get("{block}-{flat_number}")
+@router.get("/by-username/{username}")
 def fetch_resident_username(username: str, db: Session = Depends(get_db)):
     username = username.strip()
     l = username.split("-")

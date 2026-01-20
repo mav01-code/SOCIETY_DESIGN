@@ -8,23 +8,25 @@ function Login({ onLogin }) {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("http://127.0.0.1:8000/users/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: username,
-        password: password
-      })
-    });
+    try {
+      const res = await fetch("http://127.0.0.1:8000/users/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
 
-    if (!res.ok) {
-      setError("Invalid username or password");
-      return;
+      if (!res.ok) {
+        setError("Invalid username or password");
+        return;
+      }
+
+      const data = await res.json();
+      localStorage.setItem("user", JSON.stringify(data));
+      onLogin(data);
+      setError("");
+    } catch {
+      setError("Login failed. Please try again.");
     }
-
-    const data = await res.json();
-    localStorage.setItem("user", JSON.stringify(data));
-    onLogin(data);
   };
 
   return (
@@ -37,14 +39,12 @@ function Login({ onLogin }) {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-
         <button type="submit">Login</button>
       </form>
 
