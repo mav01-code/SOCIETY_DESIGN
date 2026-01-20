@@ -32,7 +32,7 @@ Each package contains (except database):
     - put - tested and works
     - delete - doesn't exist cause entry audit log cannot be deleted for confidentiality
 - gatepass - Haven't tested API endpoints for this package cause I need to generate qr and display it as an image on the presentation layer (will do it after building frontend layer)
-    - post
+    - post - tested and works
     - get
     - put
     - delete - doesn't exist for the same reason as entry
@@ -53,11 +53,15 @@ Output: Database -> Service layer -> API layer -> Presentation layer
 3) API layer (to expose server logic to frontend) - resident, gatepass and entry packages
 
 ### In-progress layers
-1) Presentation layer
+1) Presentation layer - Residents (Done), Security (Have to start)
+2) Security 
+    - Need to add authentication for "Add Resident Data" (Residents should only be able to enter their own data, not others) - Use digital signatures
+    - Role-based access control (Divide roles into Resident, Admin and Security)
+    - Password Hashing (Hash all the passwords before storing in the database)
 
 ### Frontend - flow plan
 
-1) For residents
+1) For residents (Done)
     1) Register -> (Flat & Block) and password(hashed)  
     2) Resident Details Screen
     3) Login with registered details
