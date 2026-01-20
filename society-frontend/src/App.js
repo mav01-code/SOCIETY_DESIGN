@@ -1,52 +1,61 @@
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Register from "./pages/Register";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import AddResident from "./pages/AddResident";
-import GenerateGatePass from "./pages/GenerateGatePass"; // import new page
+import GenerateGatePass from "./pages/GenerateGatePass";
+import "./App.css";
 
 function App() {
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
-  const [showLogin, setShowLogin] = useState(true);
-  const [currentPage, setCurrentPage] = useState("");
+
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("user");
     setUser(null);
-    setCurrentPage("");
+    navigate("/login");
   };
 
   if (!user) {
-    return showLogin ? (
-      <>
-        <Login onLogin={setUser} />
-        <button onClick={() => setShowLogin(false)}>Go to Register</button>
-      </>
-    ) : (
-      <>
-        <Register />
-        <button onClick={() => setShowLogin(true)}>Go to Login</button>
-      </>
+    return (
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login onLogin={setUser} />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
     );
   }
 
   return (
-    <div>
-      <h2>
-        Welcome {user.username} ({user.role})
-      </h2>
+    <div className="app-container">
+      <div className="dashboard-card">
+        <h2 className="welcome">
+          Welcome {user.username}
+          <span className="role">({user.role})</span>
+        </h2>
 
-      <button onClick={() => setCurrentPage("addResident")}>Add Resident</button>
-      <button onClick={() => setCurrentPage("gatePass")}>Generate Gate Pass</button>
+        <div className="action-buttons">
+          <button onClick={() => navigate("/add-resident")}>
+            Add Resident
+          </button>
+          <button onClick={() => navigate("/gate-pass")}>
+            Generate Gate Pass
+          </button>
+        </div>
 
-      <br /><br />
+        <button className="logout-btn" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
 
-      <button onClick={handleLogout}>Logout</button>
-
-      <div>
-        {currentPage === "addResident" && <AddResident />}
-        {currentPage === "gatePass" && <GenerateGatePass />}
+      <div className="page-content">
+        <Routes>
+          <Route path="/add-resident" element={<AddResident />} />
+          <Route path="/gate-pass" element={<GenerateGatePass />} />
+        </Routes>
       </div>
     </div>
   );

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import "./Register.css";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -30,10 +32,10 @@ function Register() {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
+    <div className="register-container">
+      <form className="register-card" onSubmit={handleRegister}>
+        <h2>Register</h2>
 
-      <form onSubmit={handleRegister}>
         <input
           placeholder="Username"
           value={username}
@@ -53,9 +55,14 @@ function Register() {
         </select>
 
         <button type="submit">Register</button>
-      </form>
 
-      {message && <p>{message}</p>}
+        {message && <p className="message">{message}</p>}
+
+        <p className="switch-auth">
+          Already have an account?
+          <Link to="/login"> Login</Link>
+        </p>
+      </form>
     </div>
   );
 }

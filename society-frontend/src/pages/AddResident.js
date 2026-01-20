@@ -41,26 +41,57 @@ function AddResident() {
   };
 
   return (
-    <div>
-      <h2>Add Resident</h2>
-      <form onSubmit={handleAddResident}>
+    <div style={{
+      maxWidth: "400px",
+      margin: "40px auto",
+      padding: "20px",
+      borderRadius: "12px",
+      backgroundColor: "#DDaEDD",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.1)"
+    }}>
+      <h2 style={{ color: "#213C51", textAlign: "center", marginBottom: "20px" }}>Add Resident</h2>
+      <form onSubmit={handleAddResident} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
         <input
           placeholder="Block-Flat (e.g., A-101)"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
+          style={{
+            padding: "10px",
+            borderRadius: "8px",
+            border: "1px solid #6594B1",
+            outline: "none",
+            backgroundColor: "#FFFFFF",
+            color: "#213C51"
+          }}
         />
         <input
           placeholder="Resident Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
+          style={{
+            padding: "10px",
+            borderRadius: "8px",
+            border: "1px solid #6594B1",
+            outline: "none",
+            backgroundColor: "#FFFFFF",
+            color: "#213C51"
+          }}
         />
         <input
           placeholder="Authorization"
           value={authorization}
           onChange={(e) => setAuthorization(e.target.value)}
           required
+          style={{
+            padding: "10px",
+            borderRadius: "8px",
+            border: "1px solid #6594B1",
+            outline: "none",
+            backgroundColor: "#FFFFFF",
+            color: "#213C51"
+          }}
         />
         <input
           type="number"
@@ -68,11 +99,44 @@ function AddResident() {
           value={totalFamilyMembers}
           onChange={(e) => setTotalFamilyMembers(e.target.value)}
           required
+          style={{
+            padding: "10px",
+            borderRadius: "8px",
+            border: "1px solid #6594B1",
+            outline: "none",
+            backgroundColor: "#FFFFFF",
+            color: "#213C51"
+          }}
         />
-        <button type="submit">Add Resident</button>
+        <button
+          type="submit"
+          style={{
+            padding: "10px",
+            borderRadius: "8px",
+            border: "none",
+            backgroundColor: "#213C51",
+            color: "#FFFFFF",
+            fontWeight: "bold",
+            cursor: "pointer",
+            transition: "0.3s",
+          }}
+          onMouseOver={(e) => e.currentTarget.style.backgroundColor = "#6594B1"}
+          onMouseOut={(e) => e.currentTarget.style.backgroundColor = "#213C51"}
+        >
+          Add Resident
+        </button>
       </form>
 
-      {message && <p>{message}</p>}
+      {message && (
+        <p style={{
+          marginTop: "20px",
+          textAlign: "center",
+          color: "#213C51",
+          fontWeight: "500"
+        }}>
+          {message}
+        </p>
+      )}
     </div>
   );
 }
