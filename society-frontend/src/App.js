@@ -1,14 +1,15 @@
 import { useState } from "react";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import AddResident from "./pages/AddResident"; // import your AddResident page
+import AddResident from "./pages/AddResident";
+import GenerateGatePass from "./pages/GenerateGatePass"; // import new page
 
 function App() {
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
   const [showLogin, setShowLogin] = useState(true);
-  const [currentPage, setCurrentPage] = useState(""); // track dashboard page
+  const [currentPage, setCurrentPage] = useState("");
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -30,29 +31,22 @@ function App() {
     );
   }
 
-  // Logged-in dashboard
   return (
     <div>
       <h2>
         Welcome {user.username} ({user.role})
       </h2>
 
-      <button onClick={() => setCurrentPage("addResident")}>
-        Add Resident
-      </button>
+      <button onClick={() => setCurrentPage("addResident")}>Add Resident</button>
+      <button onClick={() => setCurrentPage("gatePass")}>Generate Gate Pass</button>
 
-      <button onClick={() => setCurrentPage("gatePass")}>
-        Generate Gate Pass
-      </button>
-
-      <br />
-      <br />
+      <br /><br />
 
       <button onClick={handleLogout}>Logout</button>
 
       <div>
         {currentPage === "addResident" && <AddResident />}
-        {currentPage === "gatePass" && <p>Gate Pass Page (to implement)</p>}
+        {currentPage === "gatePass" && <GenerateGatePass />}
       </div>
     </div>
   );
