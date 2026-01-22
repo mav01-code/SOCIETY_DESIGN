@@ -2,15 +2,17 @@ from sqlalchemy.orm import Session
 from database.models import GatePass
 import qrcode
 import uuid
-import os
+import io
+import base64
 
-def save_qr(db: Session, qr_token, block, flat_number, valid_from, valid_until):
+def save_qr(db: Session, qr_token, block, flat_number, valid_from, valid_until, qr_image_bytes):
     gatepass = GatePass(
         qr_token=qr_token,
         block=block,
         flat_number=flat_number,
         valid_from=valid_from,
-        valid_until=valid_until
+        valid_until=valid_until,
+        qr_image=qr_image_bytes  # Store QR as bytes in DB
     )
     db.add(gatepass)
     db.commit()
@@ -30,12 +32,13 @@ def generate_qr(db: Session, block, flat_number, valid_from, valid_until):
     qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="white")
 
-    os.makedirs("qr_codes", exist_ok=True)
-    file_name = f"{qr_token}.png"
-    file_path = f"qr_codes/{file_name}"
-    img.save(file_path)
+    img_byte_arr = io.BytesIO()
+    img.save(img_byte_arr, format="PNG")
+    img_bytes = img_byte_arr.getvalue()
 
-    pass_id = save_qr(db, qr_token, block, flat_number, valid_from, valid_until)
+    pass_id = save_qr(db, qr_token, block, flat_number, valid_from, valid_until, img_bytes)
+
+    qr_base64 = base64.b64encode(img_bytes).decode("utf-8")  # convert to base64
 
     return {
         "pass_id": pass_id,
@@ -43,17 +46,19 @@ def generate_qr(db: Session, block, flat_number, valid_from, valid_until):
         "flat_number": flat_number,
         "valid_from": valid_from.isoformat(),
         "valid_until": valid_until.isoformat(),
-        "qr_url": f"http://127.0.0.1:8000/qr_codes/{file_name}"
+        "qr_token": qr_token,
+        "qr_url": f"data:image/png;base64,{qr_base64}"  # React can use this directly
     }
 
-
-def update_gatepass(db: Session, pass_id, block, flat_number, valid_from, valid_until):
+def update_gatepass(db: Session, pass_id, block, flat_number, valid_from, valid_until, qr_image_bytes=None):
     gatepass = db.query(GatePass).filter(GatePass.pass_id == pass_id).first()
     if gatepass:
         gatepass.block = block
         gatepass.flat_number = flat_number
         gatepass.valid_from = valid_from
         gatepass.valid_until = valid_until
+        if qr_image_bytes:
+            gatepass.qr_image = qr_image_bytes
         db.commit()
         db.refresh(gatepass)
     return gatepass
